@@ -1,9 +1,9 @@
 ## Term Project - CS313E
 
-### CS313 E - Elements of Data Analytics
+### CS313 E - Elements of Data Structures and Algorithms 
 
 
-#### 1. Description
+#### 1. Finding the quickest paths on West Campus, Austin, Tx!
 The goal of this project assignment is to develop a software project using Python programming, algorithms, and data structures that you have learned in this course. The topic of the project is free and can be any topic from your major study field. For example, you can work on a simple data processing project, access data from any source and process it, develop an application that controls some mockup sensors, a web scraping project, or the calculation of linear algebra operations or differential equations.
 
 The project idea should be original and not copied from any online websites or resources. The project should be new and implemented by the student group.
