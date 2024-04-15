@@ -8,18 +8,23 @@ The goal of this project assignment is to develop a software project using Pytho
 
 The project idea should be original and not copied from any online websites or resources. The project should be new and implemented by the student group.
 
-#### 2. Define a Project *(2 Points)*
-Define the project idea and create a project model design. You can use any methods to model your software model, packages, classes, and communication and interactions between them. Describe your project, software model, and its implementation in text form.
+#### 2. Define a Project 
+Define the project idea and create a project model design. You can use any method to model your software model, packages, classes, and communication and interactions between them. Describe your project, software model, and its implementation in text form.
 
 You should describe the following items:
-1. What is your project idea about?
-2. If you use any datasets, describe the dataset and provide how one can access and download it.
-3. Describe your design for main packages, classes, methods, functions, and iterations between them.
-4. Describe any libraries that you use.
-5. Design some Test cases that can test the correctness of your software.
-6. What are your current expectations of your software? For example, do you expect that it works well? What are the expected weaknesses?
+1. What is our project idea about?
+   We are trying to find the quickest path to the PCL, Union, or SAC from different locations such as coffee shops, apartments, and fast food locations!
+3. Our datasets? Accessing and downloading it?
+   We don't know if there's a dataset yet, or if we will create our own!
+5. What did we use for main packages, classes, methods, functions, and iterations between them?
+   we do not know yet.
+7. Describe any libraries that you use.
+   
+9. Design some Test cases that can test the correctness of your software.
+    
+11. What are your current expectations of your software? For example, do you expect that it works well? What are the expected weaknesses?
 
-#### 3. Implementation *(3 Points)*
+#### 3. Implementation 
 - You need to implement your project in Python. You are allowed to use any Python libraries, or without using any libraries. If you are using libraries, you need to describe them.
 - You can implement your project in Python scripts or use Jupyter Notebooks to implement your project and provide your documentation.
 - Your code should be completed and compilable without any errors. The teaching team should be able to read your documentation and run your project.
