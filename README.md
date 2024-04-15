@@ -18,6 +18,9 @@ You should describe the following items:
    We don't know if there's a dataset yet, or if we will create our own!
 5. What did we use for main packages, classes, methods, functions, and iterations between them?
    we do not know yet.
+   We created dictionaries for different settings: Fast Food, Study Locations, and Coffee Shops.
+   We will be utilizing Dijkstra's shortest path algorithm to find the shortest path between a starting point (your apartment)
+   
 7. Describe any libraries that you use.
    
 9. Design some Test cases that can test the correctness of your software.
