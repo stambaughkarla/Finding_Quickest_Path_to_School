@@ -36,6 +36,4 @@ You should describe the following items:
 - What can you do to improve your results? Apply your ideas to improve your results.
 - Provide any references that you have used.
 
-**Requirements:**
-- You should use at least 2-3 data structures that we have learned in our class. Examples of these data structures are: lists, dictionaries, queues, stacks, heaps, binary search trees, and trees.
-- You should use at least one of the algorithm types that we have learned
+
