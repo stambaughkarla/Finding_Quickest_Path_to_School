@@ -103,16 +103,8 @@ cartesian_coffee_shops = convert_to_cartesian(CoffeeShops)
 ##############################################################################################################
 #plotting the Map
 # Cartesian coordinates of coffee shops
-cartesian_coffee_shops = {'Medici': (-10880586.64780761, 3540308.4593687803), 
-                          'Foxtrot': (-10880579.142423013, 3540400.144047984), 
-                          'Starbucks': (-10880654.411067028, 3540603.0305085788), 
-                          'Lucky Lab': (-10880858.48569676, 3540645.4648507643), 
-                          'Texas Exes Coffee': (-10879742.306175433, 3540126.062025977), 
-                          'Cauldron': (-10881242.691488978, 3540677.34386998), 
-                          'Union Coffee House': (-10880481.251510072, 3540412.4499434726)}
 #main
 def main():
-    # Example usage:
     print("Cartesian Coffee Shops:", cartesian_coffee_shops)
     #print("Cartesian Apartments:", cartesian_apartments)
     #print("Cartesian Study Shops:", cartesian_study_shops)
