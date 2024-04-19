@@ -17,8 +17,8 @@ The goal of this project assignment is to develop a software project using Pytho
    We are using Matplotlib and a function to convert coordinates into a flat Cartesian plane, we will use it for purposes of visualizing the Map and distances of West Campus.
    
 7. Describe any libraries that you use.
-   -Matplotlib
-   -Math Module
+      - Matplotlib
+      - Math Module
    
 9. Design some Test cases that can test the correctness of your software.
    Test the shortest path calculation between known locations.
