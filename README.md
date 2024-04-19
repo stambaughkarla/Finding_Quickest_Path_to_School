@@ -22,10 +22,24 @@ You should describe the following items:
    We will be utilizing Dijkstra's shortest path algorithm to find the shortest path between a starting point (your apartment)
    
 7. Describe any libraries that you use.
+   NetworkX: a Python library for the creation, manipulation, and study of complex networks, to implement the graph structure and Dijkstra's algorithm.
+   Geopy: Used to calculate distances between geographical coordinates.
+   tkinter (for GUI) or argparse (for CLI) for user interaction.
+
    
 9. Design some Test cases that can test the correctness of your software.
+   Test the shortest path calculation between known locations.
+   Test scenarios where multiple paths exist between two locations.
+   Test edge cases such as unreachable destinations.
+
     
 11. What are your current expectations of your software? For example, do you expect that it works well? What are the expected weaknesses?
+
+   We expect the software to provide accurate and efficient route calculations based on Dijkstra's algorithm. However, challenges may arise in:
+
+   Ensuring data accuracy and completeness of the map representation.
+   Handling large datasets efficiently for real-time pathfinding.
+   Implementing a user-friendly interface that supports various input formats (addresses, coordinates, etc.).
 
 #### 3. Implementation 
 - You need to implement your project in Python. You are allowed to use any Python libraries, or without using any libraries. If you are using libraries, you need to describe them.
@@ -36,4 +50,6 @@ You should describe the following items:
 - What can you do to improve your results? Apply your ideas to improve your results.
 - Provide any references that you have used.
 
-
+**Requirements:**
+- You should use at least 2-3 data structures that we have learned in our class. Examples of these data structures are: lists, dictionaries, queues, stacks, heaps, binary search trees, and trees.
+- You should use at least one of the algorithm types that we have learned
