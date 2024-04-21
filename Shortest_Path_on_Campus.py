@@ -13,6 +13,11 @@ CoffeeShops = {"Medici": [30.285555932790004, -97.74197285912365], "Foxtrot": [3
 WampusAprts = {"26th West":[30.290743682782534, -97.74366840673385], "Villas on Rio": [30.2849975720786, -97.74481249476412], "Torre":[30.283815553544063, -97.74425463021969], "Waterloo": [30.28811769695338, -97.74411640508622], "Jester":[30.282537582157843, -97.73641426949976], "Standard":[30.28729345257444, -97.74584259097271], "The Nine":[30.291202486761367, -97.7490669259866], "SRD":[30.29250636324696, -97.73942918497285],"Noble 25":[30.289624667911635, -97.74781421618957], "The Marks Apartment": [30.295742530907074, -97.73698153990024]}
 StudyShops = {"PCL":[30.28265791507827, -97.73820682444149], "Union":[30.286674393939283, -97.74116418457743], "GDC":[30.28626933301477, -97.73661206690622], "EER":[30.288150820060743, -97.73554037816048], "Mcombs":[30.284159888797618, -97.73765084807866], "Welch":[30.28708795953463, -97.73778710481962], "FAC":[30.2863942580803, -97.74021950512581], "SAC":[30.284862345679493, -97.73671879409606], "Tower":[30.286233511023145, -97.73938733592517]}
 
+###################################################################################################
+"""Diksitras Algorithm Implemtaion or A* search algorithm OR QUEUE / STACK GOES HERE"""
+#probably require all the stuff like queues and stacks or Links 
+#i think 
+    
 
 ################################################################################################
 """Location Class (Class of Coffee Shops, Libraires, Apartments)"""
@@ -40,7 +45,8 @@ class LocationClass():
         print(self.cur_loc, self.cord)
         return self.cur_loc, self.cord
     
-    def find_shorestPath(self,dic):
+    #finish this up 
+    def find_shorestPath(self,dic,cord, cord2=None):
         ###diskidtras algorithm for finding closet place between cord and 
         # options of different types of locations
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -92,18 +98,19 @@ class Application:
             elif choice == "2":
                 print("So we need to find the closest Study Place/Library to YOU!")
                 self.add_location(WampusAprts, CoffeeShops)
-                
+            
+            #finish this upp
             elif choice == "3":
-                locationcoffee = LocationClass()
-                locationcoffee.get_names(CoffeeShops)
+                locationss = LocationClass()
+                locationss.get_names(CoffeeShops)
                 coffee_input = input("What coffee shop do you want to live near?\n")
                 
-                locationstudy = LocationClass()
-                locationstudy.get_names(CoffeeShops)
+                locationss.get_names(CoffeeShops)
                 study_input = input("What Study Place is a top place for you?\n")
                 
+                locationss.find_shorestPath(coffee_input, study_input)
+                
             elif choice == "4":
-                #work on this
                 print_map()
                 
         return "thank you, have a good day!"     
@@ -154,12 +161,6 @@ def print_map():
     plt.grid(True)
     plt.show()
 
-
-###################################################################################################
-"""Diksitras Algorithm Implemtaion or A* search algorithm"""
-#probably require all the stuff like queues and stacks or Links 
-#i think 
-    
     
 ##############################################################################################################
 #plotting the Map
@@ -168,10 +169,5 @@ def print_map():
 def main():
     app1 = Application()
     print(app1.app_interface())
-    
-    
-    
-    
-
 
 main()
