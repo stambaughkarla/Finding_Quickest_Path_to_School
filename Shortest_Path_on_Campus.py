@@ -6,6 +6,7 @@
 """
 import math
 import matplotlib.pyplot as plt
+from queue import PriorityQueue
 
 ##Global 
 #Notes for the dictionaries
@@ -17,7 +18,39 @@ StudyShops = {"PCL":[30.28265791507827, -97.73820682444149], "Union":[30.2866743
 """Diksitras Algorithm Implemtaion or A* search algorithm OR QUEUE / STACK GOES HERE"""
 #probably require all the stuff like queues and stacks or Links 
 #i think 
-    
+
+
+class Graph:
+    def __init__(self):
+        self.vertices = {}
+
+    def add_vertex(self, name, coordinates):
+        self.vertices[name] = coordinates
+
+    def add_edge(self, start, end, weight):
+        if start not in self.vertices or end not in self.vertices:
+            raise ValueError("Vertex does not exist")
+        if start not in self.vertices[end]:
+            self.vertices[start][end] = weight
+            self.vertices[end][start] = weight
+
+    def dijkstra(self, start_coord, locations):
+        distances = {location: float('inf') for location in locations}
+        distances[start_coord] = 0
+        pq = PriorityQueue()
+        pq.put((0, start_coord))
+
+        while not pq.empty():
+            current_distance, current_vertex = pq.get()
+            for neighbor, weight in self.vertices[current_vertex].items():
+                distance = current_distance + weight
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+                    pq.put((distance, neighbor))
+
+        # Find the location with the minimum distance
+        closest_location = min(distances, key=distances.get)
+        return closest_location
 
 ################################################################################################
 """Location Class (Class of Coffee Shops, Libraires, Apartments)"""
@@ -26,12 +59,12 @@ class LocationClass():
         self.names = []
         self.cur_loc = None
         self.cord = []
+        self.graph = Graph()
         
     """Methods common to all locations"""
     def get_names(self, dic):
         for names, cords in dic.items():
             self.names.append(names)
-            
         for name in self.names:
             print(name)
         
@@ -42,37 +75,33 @@ class LocationClass():
             if ask_loc == i:
                 self.cur_loc = i
                 self.cord=j
-        print(self.cur_loc, self.cord)
-        return self.cur_loc, self.cord
     
     #finish this up 
-    def find_shorestPath(self,dic,cord, cord2=None):
-        ###diskidtras algorithm for finding closet place between cord and 
-        # options of different types of locations
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        pass
-    
+    def find_shortestPath(self, coord,dic):
+        # Use Dijkstra's algorithm to find the shortest path between start and end coordinates
+        shortest_distance = self.graph.dijkstra(coord, dic)
+        print(shortest_distance)
     
 """ Application Class """
 class Application:
     def __init__(self):
         self.user =None
         self.locations = {}
-        
+        self.loc= LocationClass
+    
     def add_location(self,dic1,dic2):
-        loc = LocationClass()
         vague_location=input("Are you out on campus (1) or are you at your Apartment (2). Please enter a number.\n")
         c= 1
         while c != 0:
             if vague_location == "1":
                 c=0
-                loc.get_names(dic2)
-                loc.store_location(dic2)
-                
+                self.loc.get_names(dic2)
+                self.loc.store_location(dic2)
             elif vague_location == "2":
                 c=0
-                loc.get_names(dic1)
-                loc.store_location(dic1)
+                self.loc.get_names(dic1)
+                self.loc.store_location(dic1)
+                
             else:
                 print("Please enter 1 or 2.")
                 
@@ -93,22 +122,24 @@ class Application:
             choice = input("Enter your choice: ")
             if choice == "1":
                 print("So we need to find the closest Coffee Shop to YOU!")
-                self.add_location(WampusAprts,StudyShops )
+                self.add_location(WampusAprts,StudyShops)
+                print("i am back to choicees about to run find hsorest path")
+                self.loc.find_shortestPath(self.loc.cord, CoffeeShops)
                 
             elif choice == "2":
                 print("So we need to find the closest Study Place/Library to YOU!")
                 self.add_location(WampusAprts, CoffeeShops)
+                self.loc.find_shortestPath(self.loc.cord, CoffeeShops)
             
             #finish this upp
             elif choice == "3":
-                locationss = LocationClass()
-                locationss.get_names(CoffeeShops)
+                self.loc.get_names(CoffeeShops)
                 coffee_input = input("What coffee shop do you want to live near?\n")
                 
-                locationss.get_names(CoffeeShops)
+                self.loc.get_names(CoffeeShops)
                 study_input = input("What Study Place is a top place for you?\n")
                 
-                locationss.find_shorestPath(coffee_input, study_input)
+                
                 
             elif choice == "4":
                 print_map()
