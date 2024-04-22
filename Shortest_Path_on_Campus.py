@@ -10,7 +10,7 @@ from queue import PriorityQueue
 
 ##Global 
 #Notes for the dictionaries
-CoffeeShops = {"Medici": [30.285555932790004, -97.74197285912365], "Foxtrot": [30.286267142618332, -97.74190543710668], "Starbucks": [30.287840940613993, -97.74258158684002], "Lucky Lab": [30.288170102228566, -97.74441482042991], "Texas Exes Coffee": [30.284141037852073, -97.7343880091916], "Cauldron": [30.288417385868758, -97.74786619978389], "Union Coffee House": [30.286362600637183, -97.74102606807396]}
+CoffeeShops = {"Medici":[30.285555932790004, -97.74197285912365], "Foxtrot":[30.286267142618332, -97.74190543710668], "Starbucks":[30.287840940613993, -97.74258158684002], "Lucky Lab":[30.288170102228566, -97.74441482042991], "Texas Exes Coffee":[30.284141037852073, -97.7343880091916], "Cauldron":[30.288417385868758, -97.74786619978389], "Union Coffee House":[30.286362600637183, -97.74102606807396]}
 WampusAprts = {"26th West":[30.290743682782534, -97.74366840673385], "Villas on Rio": [30.2849975720786, -97.74481249476412], "Torre":[30.283815553544063, -97.74425463021969], "Waterloo": [30.28811769695338, -97.74411640508622], "Jester":[30.282537582157843, -97.73641426949976], "Standard":[30.28729345257444, -97.74584259097271], "The Nine":[30.291202486761367, -97.7490669259866], "SRD":[30.29250636324696, -97.73942918497285],"Noble 25":[30.289624667911635, -97.74781421618957], "The Marks Apartment": [30.295742530907074, -97.73698153990024]}
 StudyShops = {"PCL":[30.28265791507827, -97.73820682444149], "Union":[30.286674393939283, -97.74116418457743], "GDC":[30.28626933301477, -97.73661206690622], "EER":[30.288150820060743, -97.73554037816048], "Mcombs":[30.284159888797618, -97.73765084807866], "Welch":[30.28708795953463, -97.73778710481962], "FAC":[30.2863942580803, -97.74021950512581], "SAC":[30.284862345679493, -97.73671879409606], "Tower":[30.286233511023145, -97.73938733592517]}
 
@@ -25,24 +25,49 @@ class Graph:
         self.vertices = {}
 
     def add_vertex(self, name, coordinates):
-        self.vertices[name] = coordinates
+        self.vertices[name] = {"coordinates": coordinates, "neighbors": {}}
 
     def add_edge(self, start, end, weight):
-        if start not in self.vertices or end not in self.vertices:
-            raise ValueError("Vertex does not exist")
-        if start not in self.vertices[end]:
-            self.vertices[start][end] = weight
-            self.vertices[end][start] = weight
+        # Add the edge
+        if start not in self.vertices:
+            raise ValueError(f"Vertex {start} does not exist")
+        if end not in self.vertices:
+            raise ValueError(f"Vertex {end} does not exist")
+
+        # Add the edge
+        self.vertices[start]["neighbors"][end] = weight
+        self.vertices[end]["neighbors"][start] = weight
+
+    def add_initial_vertices(self, locations):
+        for name, coordinates in locations.items():
+            self.add_vertex(name, coordinates)
+
+    def add_edges_from_coordinates(self):
+        for v1, vertex1 in self.vertices.items():
+            for v2, vertex2 in self.vertices.items():
+                if v1 != v2:
+                    # Calculate the distance between two vertices (Euclidean distance)
+                    distance = math.sqrt((vertex1["coordinates"][0] - vertex2["coordinates"][0])**2 + 
+                                          (vertex1["coordinates"][1] - vertex2["coordinates"][1])**2)
+                    self.add_edge(v1, v2, distance)
+                    
+    def clear_vertices(self):
+        self.vertices = {}
+        
 
     def dijkstra(self, start_coord, locations):
-        distances = {location: float('inf') for location in locations}
-        distances[start_coord] = 0
+        # Add edges based on coordinates before running Dijkstra's algorithm
+        self.add_edges_from_coordinates()
+
+        distances = {name: float('inf') for name in self.vertices}
+        start_vertex = min(self.vertices, key=lambda name: sum((a - b) ** 2 for a, b in zip(self.vertices[name]["coordinates"], start_coord)))
+        distances[start_vertex] = 0
         pq = PriorityQueue()
-        pq.put((0, start_coord))
+        pq.put((0, start_vertex))
 
         while not pq.empty():
             current_distance, current_vertex = pq.get()
-            for neighbor, weight in self.vertices[current_vertex].items():
+            for neighbor, weight in self.vertices[current_vertex]["neighbors"].items():
                 distance = current_distance + weight
                 if distance < distances[neighbor]:
                     distances[neighbor] = distance
@@ -51,6 +76,7 @@ class Graph:
         # Find the location with the minimum distance
         closest_location = min(distances, key=distances.get)
         return closest_location
+
 
 ################################################################################################
 """Location Class (Class of Coffee Shops, Libraires, Apartments)"""
@@ -63,6 +89,7 @@ class LocationClass():
         
     """Methods common to all locations"""
     def get_names(self, dic):
+        self.names = []
         for names, cords in dic.items():
             self.names.append(names)
         for name in self.names:
@@ -77,17 +104,20 @@ class LocationClass():
                 self.cord=j
     
     #finish this up 
-    def find_shortestPath(self, coord,dic):
+    def find_shortestPath(self, start_coord, locations):
+        # Convert the list of coordinates to a tuple
+        start_coord_tuple = tuple(start_coord)
+        
         # Use Dijkstra's algorithm to find the shortest path between start and end coordinates
-        shortest_distance = self.graph.dijkstra(coord, dic)
-        print(shortest_distance)
+        shortest_distance = self.graph.dijkstra(start_coord_tuple, locations)
+        return shortest_distance
     
 """ Application Class """
 class Application:
     def __init__(self):
         self.user =None
         self.locations = {}
-        self.loc= LocationClass
+        self.loc= LocationClass()
     
     def add_location(self,dic1,dic2):
         vague_location=input("Are you out on campus (1) or are you at your Apartment (2). Please enter a number.\n")
@@ -104,6 +134,15 @@ class Application:
                 
             else:
                 print("Please enter 1 or 2.")
+                
+    def ask_for_map(self):
+        j_ask = input("would you like to see the map (y/n)\n")
+        if j_ask == "y":
+            print_map()
+        if j_ask == "n":
+            return ''
+            
+        
                 
     
     #i think i need to fix this so its more effceient with the classes and stuff
@@ -124,13 +163,20 @@ class Application:
                 print("So we need to find the closest Coffee Shop to YOU!")
                 self.add_location(WampusAprts,StudyShops)
                 print("i am back to choicees about to run find hsorest path")
-                self.loc.find_shortestPath(self.loc.cord, CoffeeShops)
-                
+                self.loc.graph.clear_vertices()
+                self.loc.graph.add_initial_vertices(CoffeeShops)
+                closest_shop = self.loc.find_shortestPath(self.loc.cord, CoffeeShops)
+                print("The closest coffee shop is:", closest_shop,"\n")
+                self.ask_for_map()
             elif choice == "2":
                 print("So we need to find the closest Study Place/Library to YOU!")
                 self.add_location(WampusAprts, CoffeeShops)
-                self.loc.find_shortestPath(self.loc.cord, CoffeeShops)
-            
+                self.loc.graph.clear_vertices()
+                self.loc.graph.add_initial_vertices(StudyShops)
+                Closest = self.loc.find_shortestPath(self.loc.cord, StudyShops)
+                print("The Clost Study Place is: ", Closest,"\n")
+                self.ask_for_map()
+                
             #finish this upp
             elif choice == "3":
                 self.loc.get_names(CoffeeShops)
