@@ -256,7 +256,8 @@ def print_map():
 
 def main():
     app1 = Application()
-    print(app1.app_interface())
+    app1.app_interface()
 
 
-main()
+if __name__ == "__main__":
+    main()
